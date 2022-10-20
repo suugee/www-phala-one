@@ -22,6 +22,13 @@
     <el-table :data="tableData" class="stakers-box" border>
       <el-table-column prop="pid" label="Pid" width="100px" />
       <el-table-column prop="user" label="User" />
+      <el-table-column label="Explorer" width="220px">
+        <template v-slot="scope">
+          <span><a :href="'https://khala.polkaholic.io/account/'+scope.row.user" rel="noopener noreferrer" target="_blank" title="Polkaholic, https://polkaholic.io/"><el-icon><Link /></el-icon>Polkaholic</a></span>
+          <span><a :href="'https://sub.id/'+scope.row.user" rel="noopener noreferrer" target="_blank" title="SubId, https://sub.id"><el-icon><Link /></el-icon>SubId</a></span>
+          <span><a :href="'https://khala.subscan.io/account/'+scope.row.user" rel="noopener noreferrer" target="_blank" title="Subscan, https://subscan.io/"><el-icon><Link /></el-icon>Subscan</a></span>
+        </template>
+      </el-table-column>
       <el-table-column prop="locked" label="Locked" width="150px" />
     </el-table>
     <!-- ----------------- -->
@@ -72,6 +79,7 @@ export default {
             this.dialogVisible = true;
           }
           if (res.data.status === 200) {
+            res.data.data.sort((a, b) => b.locked - a.locked);
             this.tableData = res.data.data;
             console.log(res.data.data.length);
           }
