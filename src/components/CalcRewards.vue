@@ -151,8 +151,9 @@
           </div>
         </template>
         <ul>
-          <li>BlockTime:15s</li>
-          <li>PHA Price:{{ phaPrice }}</li>
+          <li>BlockTime ≈ {{ blockTime }}s</li>
+          <li>BlockPerday ≈ {{ (86400 / blockTime).toFixed(0) }}</li>
+          <li>PHA Price ≈ {{ phaPrice }}</li>
         </ul>
       </el-card>
     </template>
@@ -177,6 +178,8 @@ export default {
       totalV: null,
       rewards: null,
       phaPrice: null,
+      blockTime: 13, //这里直接写死了，回头使用调用的链上数据计算
+      blockPerday: 6500, //这里直接写死了，回头使用调用的链上数据计算
       tokenomics: {},
     };
   },
@@ -285,7 +288,7 @@ export default {
 
     dRewards() {
       let f = 0;
-      f = 720000 * 0.8 * (this.initV / this.totalV);
+      f = 93.75 * this.blockPerday * 0.8 * (this.initV / this.totalV);
       return f.toFixed(2);
     },
     dRewardsUSDT() {
@@ -294,7 +297,7 @@ export default {
     },
     mRewards() {
       let g = 0;
-      g = 720000 * 0.8 * (this.initV / this.totalV) * 30;
+      g = 93.75 * this.blockPerday * 0.8 * (this.initV / this.totalV) * 30;
       return g.toFixed(2);
     },
     mRewardsUSDT() {
